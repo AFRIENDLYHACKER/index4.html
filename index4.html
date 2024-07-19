@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Play.ht Text-to-Speech Example</title>
+  <script src="https://cdn.play.ht/playht.min.js"></script
+    <script src="https://cdn.play.ht/embed/v1/playht.js"></script>
+</head>
+<body>
+  <h1>Play.ht Text-to-Speech Example</h1>
+  <button id="play-button">Play Audio</button>
+
+  <script>
+    const apiKey = '01c094a6b861407d9b84fd654c2ee813';
+    playht.init(apiKey);
+
+    const text = 'Hello, world!';
+    const voice = 'en-US_AllisonV3';
+    const options = {
+      format: 'mp3',
+      sampleRate: 44100
+    };
+
+    document.getElementById('play-button').addEventListener('click', () => {
+      playht.textToSpeech(text, voice, options).then((audio) => {
+        const audioBlob = new Blob([audio], { type: 'audio/mp3' });
+        const audioUrl = URL.createObjectURL(audioBlob);
+        const audioElement = document.createElement('audio');
+        audioElement.src = audioUrl;
+        audioElement.play();
+      }).catch((error) => {
+        console.error(error);
+      });
+    });
+  </script>
+</body>
+</html>
